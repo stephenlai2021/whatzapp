@@ -281,7 +281,7 @@
   .profile-modal,
   .leftSide {
     position: relative;
-    flex: 30%;
+    flex: 30% 5%;
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
@@ -465,7 +465,7 @@
       display: none;
     }
     .leftSide {
-      flex: min-content;
+      /* flex: min-content; */
       /* flex: 0%; */
     }
     .header {
