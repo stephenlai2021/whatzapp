@@ -1,10 +1,10 @@
-// import vercel from "@sveltejs/adapter-vercel";
+import vercel from "@sveltejs/adapter-vercel";
 
 const config = {
   kit: {
     target: "#svelte",
-    // adapter: vercel(),
+    adapter: vercel(),
   },
 };
 
-export default config
+// export default config
