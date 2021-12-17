@@ -1,3 +1,4 @@
+/** @type {import('@sveltejs/kit').Config} */
 import vercel from "@sveltejs/adapter-vercel";
 
 const config = {
@@ -7,4 +8,4 @@ const config = {
   },
 };
 
-// export default config
+export default config
