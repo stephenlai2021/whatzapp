@@ -354,7 +354,8 @@
   .loading,
   .rightSide {
     position: relative;
-    flex: 70%;
+    /* flex: 70%; */
+    width: 70%;
     background: #e5ddd5;
   }
   .loading::before,

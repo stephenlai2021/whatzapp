@@ -281,7 +281,8 @@
   .profile-modal,
   .leftSide {
     position: relative;
-    flex: 30%;
+    /* flex: 30%; */
+    width: 30%;
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
