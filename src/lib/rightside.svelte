@@ -562,7 +562,7 @@
   }
   @media (max-width: 575px) {
     .rightSide {
-      width: 90%;
+      flex: 90%;
     }
     label,
     li {

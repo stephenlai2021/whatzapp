@@ -466,8 +466,8 @@
       display: none;
     }
     .leftSide {
-      /* flex: 0%; */
-      width: 10%;
+      flex: 10%;
+      /* width: 10%; */
     }
     .header {
       display: flex;
