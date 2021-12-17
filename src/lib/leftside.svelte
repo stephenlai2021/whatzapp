@@ -282,7 +282,6 @@
   .leftSide {
     position: relative;
     flex: 30%;
-    /* width: 30%; */
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
@@ -466,8 +465,8 @@
       display: none;
     }
     .leftSide {
-      flex: 10%;
-      /* width: 10%; */
+      flex: min-content;
+      /* flex: 0%; */
     }
     .header {
       display: flex;
