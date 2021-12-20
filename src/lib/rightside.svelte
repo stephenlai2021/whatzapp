@@ -18,18 +18,21 @@
   import { onMount } from "svelte";
   import { formatDistanceToNow } from "date-fns";
   import EmojiMenu from "$lib/emoji.svelte";
+  import { createEventDispatcher } from 'svelte'
 
   // image input
-  let image_url = null;
   let file = null;
   let fileError = null;
+  let image_url = null;
 
   // audio recording
   let chuck = null;
   let audio_url = null;
+  let rightSide = null;
   let mediaStream = null;
   let mediaRecorder = null;
 
+  let rwd = false;
   let message = "";
   let user_val = null;
   let isAudioOn = false;
@@ -37,6 +40,8 @@
   let messages_val = null;
   let showEmojiMenu = false;
   let loggedInUser = auth.currentUser.uid;
+
+  const dispatch = createEventDispatcher()
 
   selectedUser.subscribe((val) => {
     user_val = val;
@@ -88,7 +93,7 @@
           to: selectedUser,
           createdAt: Timestamp.fromDate(new Date()),
           image: image_url || "",
-          audio: audio_url || ""
+          audio: audio_url || "",
         });
 
         await setDoc(doc(db, "whatzapp_lastMsg", id), {
@@ -108,7 +113,7 @@
       }
       file = null;
       image_url = null;
-      audio_url = null
+      audio_url = null;
     }
   };
 
@@ -160,11 +165,11 @@
           let blob = new Blob(chuck, {
             type: "audio/wav",
           });
-          
+
           // audio_url = URL.createObjectURL(blob);
-          let file = new File([blob], Date.now() + '.wav', { type: blob.type })
-          console.log("audio url: ", file);       
-          
+          let file = new File([blob], Date.now() + ".wav", { type: blob.type });
+          console.log("audio url: ", file);
+
           const audioRef = ref(storage, `whatzapp/${file.name}`);
 
           const snap = await uploadBytes(audioRef, file);
@@ -181,6 +186,12 @@
     }
   };
 
+  const showUserList = () => {
+    rightSide.style.width = '0'
+    
+    dispatch('showUserList', true)
+  }
+
   $: if (user_val) {
     console.log("selected user: ", user_val);
   }
@@ -189,8 +200,20 @@
     console.log("selected user messages: ", messages_val);
   }
 
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 575) {
+      rwd = true;
+    } else {
+      rwd = false;
+    }
+  });
+
   onMount(() => {
     selectedUser.set(null);
+    rightSide.style.width = "100vw";
+
+    console.log("window inner width: ", window.innerWidth);
+    if (window.innerWidth <= 575) rwd = true;
   });
 </script>
 
@@ -199,20 +222,25 @@
     <img
       src="whatsapp_web.jpg"
       alt="logo pic"
-      style="height: calc(100%); width: 100%; object-fit: contain;"
+      style="height: calc(100%); width: 100%; object-fit: cover;"
     />
   </div>
 {:else}
-  <div class="rightSide">
+  <div class="rightSide" bind:this={rightSide}>
     <div class="header">
-      {#if user_val}
-        <div class="imgText">
-          <div class="userimg">
-            <img src={user_val.avatar} class="cover" alt="" />
+      <div style="display: flex; align-items: center;">
+        {#if rwd}
+          <ion-icon name="arrow-back-outline" style="margin-right: 10px;" on:click={showUserList} />
+        {/if}
+        {#if user_val}
+          <div class="imgText">
+            <div class="userimg">
+              <img src={user_val.avatar} class="cover" alt="" />
+            </div>
+            <h4>{user_val.name}</h4>
           </div>
-          <h4>{user_val.name}</h4>
-        </div>
-      {/if}
+        {/if}
+      </div>
       <ul class="nav_icons">
         <li on:click={logout}>
           <ion-icon name="log-out-outline" />
@@ -230,13 +258,19 @@
         {#each messages_val as item (item.createdAt)}
           {#if item.from === auth.currentUser.uid}
             <div class="message my_message">
-              <p style="display: flex; flex-direction: column; align-items: flex-end;">
+              <p
+                style="display: flex; flex-direction: column; align-items: flex-end;"
+              >
                 {#if item.image}
-                  <img src={item.image} alt={item.text} style="margin-bottom: 12px;" />
+                  <img
+                    src={item.image}
+                    alt={item.text}
+                    style="margin-bottom: 12px;"
+                  />
                 {/if}
                 {#if item.audio}
                   <audio controls style="margin-bottom: 12px;">
-                    <source src={item.audio}>
+                    <source src={item.audio} />
                     <track kind="captions" />
                   </audio>
                 {/if}
@@ -249,11 +283,15 @@
             <div class="message friend_message">
               <p style="display: flex; flex-direction: column;">
                 {#if item.image}
-                  <img src={item.image} alt={item.text} style="margin-bottom: 12px;" />
+                  <img
+                    src={item.image}
+                    alt={item.text}
+                    style="margin-bottom: 12px;"
+                  />
                 {/if}
                 {#if item.audio}
                   <audio controls style="margin-bottom: 12px;">
-                    <source src={item.audio}>
+                    <source src={item.audio} />
                     <track kind="captions" />
                   </audio>
                 {/if}
@@ -562,7 +600,9 @@
   }
   @media (max-width: 575px) {
     .rightSide {
-      /* flex: 90%; */
+      /* width: 0; */
+      /* flex: 0%; */
+      /* display: none; */
     }
     label,
     li {

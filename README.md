@@ -56,14 +56,18 @@ Question:
   - PWA Tutorial for Beginners #23 ~ #23 ~ #28 / youtube
   - offline cannot be accomplished because the app is required auth, and the auth cannot be performed when there is no internnet connection, therefore only shell can be cached offline
   - not yet to implement
-  - [Done] 😀
+  - [Half-Done] 😀
 
 - _*route gruad server side*_
   - serverside auth
   - [Not-Implement] 
 
+ _*RWD*_
+  - make left/right side full width @575px 
+
 - _*deployment*_
   - reference: Deploy SvelteKit App with Vercel / dev.to
+  - [100%-Done] 😁😀😀
  
   _*firebase admin sdk*_
   - integreate firebase on server (api route)

@@ -25,6 +25,7 @@
 {#if showPage}
   <div class="container">
     <LeftSide />
+    <!-- <RightSide on:showUserList={} /> -->
     <RightSide />
   </div>
 {:else}
@@ -43,7 +44,7 @@
   }
   @media (max-width: 800px) {
     .container {
-      height: 100vh;
+      /* height: 100vh; */
     }
   }
 </style>
