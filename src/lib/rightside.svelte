@@ -45,6 +45,7 @@
 
   selectedUser.subscribe((val) => {
     user_val = val;
+
   });
 
   selectedUserMessages.subscribe((val) => {
@@ -186,10 +187,12 @@
     }
   };
 
-  const showUserList = () => {
-    rightSide.style.width = '0'
-    
-    dispatch('showUserList', true)
+  const handleClick = () => {
+    if (window.innerWidth <= 575) { 
+      rightSide.style.width = '0'   
+
+      dispatch('showLeftside', true)
+    }
   }
 
   $: if (user_val) {
@@ -203,6 +206,8 @@
   window.addEventListener("resize", () => {
     if (window.innerWidth <= 575) {
       rwd = true;
+
+      dispatch('mobile-mode')
     } else {
       rwd = false;
     }
@@ -210,10 +215,6 @@
 
   onMount(() => {
     selectedUser.set(null);
-    rightSide.style.width = "100vw";
-
-    console.log("window inner width: ", window.innerWidth);
-    if (window.innerWidth <= 575) rwd = true;
   });
 </script>
 
@@ -222,16 +223,16 @@
     <img
       src="whatsapp_web.jpg"
       alt="logo pic"
-      style="height: calc(100%); width: 100%; object-fit: cover;"
+      style="height: calc(100%); width: 100%; object-fit: contain;"
     />
   </div>
 {:else}
   <div class="rightSide" bind:this={rightSide}>
     <div class="header">
       <div style="display: flex; align-items: center;">
-        {#if rwd}
-          <ion-icon name="arrow-back-outline" style="margin-right: 10px;" on:click={showUserList} />
-        {/if}
+        <!-- {#if rwd}
+          <ion-icon name="arrow-back-outline" style="margin-right: 10px;" on:click={handleClick} />
+        {/if} -->
         {#if user_val}
           <div class="imgText">
             <div class="userimg">
@@ -338,7 +339,7 @@
           bind:value={message}
           on:keypress={submitMessage}
         />
-        <!-- <li><ion-icon class="icon-send" name="send-outline" /></li> -->
+        <!-- <li><ion-icon class="icon-send" name="send-outline" on:click={submitMessage} /></li> -->
       </div>
       <li>
         <ion-icon
@@ -392,7 +393,8 @@
   .loading,
   .rightSide {
     position: relative;
-    flex: 95% 70%;
+    /* flex: 70% 95%; */
+    flex: 70%;
     /* width: 70%; */
     background: #e5ddd5;
   }
@@ -603,6 +605,7 @@
       /* width: 0; */
       /* flex: 0%; */
       /* display: none; */
+      /* flex: 95%; */
     }
     label,
     li {

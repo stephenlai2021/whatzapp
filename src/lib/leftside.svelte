@@ -24,7 +24,7 @@
   let messages = [];
   let lastMsg = null;
   let ids_val = null;
-  let leftSide = null
+  let leftSide = null;
   let fileError = null;
   let hasAvatar = false;
   let activeItem = null;
@@ -82,8 +82,6 @@
     });
 
     selectedUser.set(user);
-
-    if (window.innerWidth <= 575) leftSide.style.width = '0px'
   };
 
   // get current user
@@ -147,7 +145,8 @@
         </li>
       </ul>
       {#if user}
-        <li class="user-name" on:click={showProfile}>
+        <!-- <li class="user-name" on:click={showProfile}> -->
+        <li class="user-name">
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
       {/if}
@@ -264,7 +263,7 @@
     display: none;
     font-size: 22px;
     font-weight: bold;
-    color: #00BFA5;
+    color: #00bfa5;
   }
   .user-status {
     position: absolute;
@@ -284,7 +283,8 @@
   .profile-modal,
   .leftSide {
     position: relative;
-    flex: 30% 5%;
+    /* flex: 30% 5%; */
+    flex: 30%;
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
@@ -465,23 +465,24 @@
     .search_chat,
     .nav_icons,
     .details {
-      /* display: none; */
+      display: none;
     }
     .leftSide {
       /* flex: min-content; */
       /* flex: 0%; */
       /* flex: 1; */
       /* width: 100vw; */
+      flex: 5%;
     }
     .header {
-      /* display: flex;
-      justify-content: center; */
+      display: flex;
+      justify-content: center;
     }
     .chatlist .block {
-      /* padding: 10px; */
-    }
+      padding: 10px;
+    } 
     .chatlist .block .imgbx {
-      /* margin-right: 0; */
+      margin-right: 0;
     }
   }
 </style>
