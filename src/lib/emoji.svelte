@@ -94,6 +94,7 @@
   .emoji-grid {
     width: 44px;
     height: 44px;
+    /* background: red; */
     display: grid;
     justify-content: center;
   }

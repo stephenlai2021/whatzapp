@@ -187,14 +187,6 @@
     }
   };
 
-  const handleClick = () => {
-    if (window.innerWidth <= 575) { 
-      rightSide.style.width = '0'   
-
-      dispatch('showLeftside', true)
-    }
-  }
-
   $: if (user_val) {
     console.log("selected user: ", user_val);
   }
@@ -202,16 +194,6 @@
   $: if (messages_val) {
     console.log("selected user messages: ", messages_val);
   }
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth <= 575) {
-      rwd = true;
-
-      dispatch('mobile-mode')
-    } else {
-      rwd = false;
-    }
-  });
 
   onMount(() => {
     selectedUser.set(null);
@@ -230,9 +212,6 @@
   <div class="rightSide" bind:this={rightSide}>
     <div class="header">
       <div style="display: flex; align-items: center;">
-        <!-- {#if rwd}
-          <ion-icon name="arrow-back-outline" style="margin-right: 10px;" on:click={handleClick} />
-        {/if} -->
         {#if user_val}
           <div class="imgText">
             <div class="userimg">
@@ -311,27 +290,30 @@
       {#if audio_url}
         <div class="audio-notice common">Audio is ready</div>
       {/if}
-      <li>
-        <ion-icon
-          name="happy-outline"
-          on:click={() => (showEmojiMenu = !showEmojiMenu)}
-        />
-      </li>
-      <label class="icon-attach">
-        <ion-icon name="attach-outline" />
-        <input
-          class="attach-input"
-          type="file"
-          on:change={handleChange}
-          style="margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            width: 0;
-            height: 0;
-            opacity: 0;
-            cursor: pointer;"
-        />
-      </label>
+      <div style="display: flex; justify-content: flex-start; align-items: center;">
+        <li>
+          <ion-icon
+            name="happy-outline"
+            on:click={() => (showEmojiMenu = !showEmojiMenu)}
+            />
+            <!-- style="width: 24px; height: 24px;" -->
+        </li>
+        <label class="icon-attach">
+          <ion-icon name="attach-outline" />
+          <input
+            class="attach-input"
+            type="file"
+            on:change={handleChange}
+            style="margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              width: 0;
+              height: 0;
+              opacity: 0;
+              cursor: pointer;"
+          />
+        </label>
+      </div>
       <div class="input-box">
         <input
           type="text"
@@ -446,9 +428,10 @@
     cursor: pointer;
     color: #51585c;
     font-size: 1.5em;
+    /* border: 1px solid; */
   }
   li .icon-mic {
-    margin-left: 15px;
+    margin-left: 10px;
   }
   .icon-send {
     position: absolute;
@@ -596,20 +579,14 @@
     font-size: 1em;
   }
   .icon-attach {
-    margin: 0 20px;
+    margin: 0 10px;
     padding: 0;
     box-sizing: border-box;
   }
   @media (max-width: 575px) {
-    .rightSide {
-      /* width: 0; */
-      /* flex: 0%; */
-      /* display: none; */
-      /* flex: 95%; */
-    }
     label,
     li {
-      margin: 0;
+      /* margin: 0; */
     }
     .chatBox {
       padding: 20px;

@@ -468,10 +468,6 @@
       display: none;
     }
     .leftSide {
-      /* flex: min-content; */
-      /* flex: 0%; */
-      /* flex: 1; */
-      /* width: 100vw; */
       flex: 5%;
     }
     .header {
