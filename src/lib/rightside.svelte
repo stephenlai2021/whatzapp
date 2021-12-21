@@ -18,7 +18,6 @@
   import { onMount } from "svelte";
   import { formatDistanceToNow } from "date-fns";
   import EmojiMenu from "$lib/emoji.svelte";
-  import { createEventDispatcher } from 'svelte'
 
   // image input
   let file = null;
@@ -28,11 +27,8 @@
   // audio recording
   let chuck = null;
   let audio_url = null;
-  let rightSide = null;
   let mediaStream = null;
   let mediaRecorder = null;
-
-  let rwd = false;
   let message = "";
   let user_val = null;
   let isAudioOn = false;
@@ -41,11 +37,8 @@
   let showEmojiMenu = false;
   let loggedInUser = auth.currentUser.uid;
 
-  const dispatch = createEventDispatcher()
-
   selectedUser.subscribe((val) => {
     user_val = val;
-
   });
 
   selectedUserMessages.subscribe((val) => {
@@ -65,14 +58,8 @@
     }
   };
 
-  const submitMessage = async (e) => {
-    if (e.charCode === 13) {
-      if (message === null) {
-        alert("Please enter something !");
-        return;
-      }
-
-      showEmojiMenu = false;
+  const sendMessage = async () => {
+    showEmojiMenu = false;
 
       try {
         let selectedUser = user_val.uid;
@@ -106,15 +93,21 @@
           audio: audio_url || "",
           unread: true,
         });
-
-        // dispatch('combinedID', id)
-        combinedID.set(id);
       } catch (err) {
         console.log(err.message);
       }
       file = null;
       image_url = null;
       audio_url = null;
+  }
+
+  const submitMessage = async (e) => {
+    if (e.charCode === 13) {
+      if (!message) {
+        // alert("Please enter something !");
+        return;
+      }
+      sendMessage()      
     }
   };
 
@@ -209,7 +202,7 @@
     />
   </div>
 {:else}
-  <div class="rightSide" bind:this={rightSide}>
+  <div class="rightSide">
     <div class="header">
       <div style="display: flex; align-items: center;">
         {#if user_val}
@@ -296,7 +289,6 @@
             name="happy-outline"
             on:click={() => (showEmojiMenu = !showEmojiMenu)}
             />
-            <!-- style="width: 24px; height: 24px;" -->
         </li>
         <label class="icon-attach">
           <ion-icon name="attach-outline" />
@@ -321,7 +313,7 @@
           bind:value={message}
           on:keypress={submitMessage}
         />
-        <!-- <li><ion-icon class="icon-send" name="send-outline" on:click={submitMessage} /></li> -->
+        <li><ion-icon class="icon-send" name="send-outline" on:click={sendMessage} /></li>
       </div>
       <li>
         <ion-icon
@@ -376,7 +368,7 @@
   .rightSide {
     position: relative;
     /* flex: 70% 95%; */
-    flex: 70%;
+    -webkit-flex: 70%;
     /* width: 70%; */
     background: #e5ddd5;
   }
@@ -443,13 +435,12 @@
   @media (max-width: 400px) {
     .icon-send {
       font-size: 1rem;
-      right: 5px;
+      right: 8px;
     }
   }
   .input-box {
     width: 100%;
     position: relative;
-    /* border: 1px solid; */
   }
   input {
     outline: none;
@@ -560,18 +551,9 @@
     justify-content: flex-start;
     align-items: center;
   }
-  /* .chatbox_input img {
-    cursor: pointer;
-    font-size: 1.8em;
-    color: #51585c;
-  }
-  .chatbox_input img:nth-child(1) {
-    margin-right: 15px;
-  } */
   .chatbox_input input {
     position: relative;
     width: 100%;
-    /* margin: 0 20px; */
     padding: 10px 20px;
     border: none;
     outline: none;
@@ -584,10 +566,6 @@
     box-sizing: border-box;
   }
   @media (max-width: 575px) {
-    label,
-    li {
-      /* margin: 0; */
-    }
     .chatBox {
       padding: 20px;
     }

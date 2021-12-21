@@ -62,12 +62,6 @@ Question:
   - serverside auth
   - [Not-Implement] 
 
- _*RWD*_
-  - make left/right side full width @575px 
-  - select user / clicking user list @chat page: set leftside width 0%, set rightside width 100%
-  - click back button @rightside, set rightside width 100%, set leftside width 0%
-  - 
-
 - _*deployment*_
   - reference: Deploy SvelteKit App with Vercel / dev.to
   - [100%-Done] 😁😀😀

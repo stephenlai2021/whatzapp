@@ -468,7 +468,7 @@
       display: none;
     }
     .leftSide {
-      flex: 5%;
+      -webkit-flex: 5%;
     }
     .header {
       display: flex;
