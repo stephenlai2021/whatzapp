@@ -145,7 +145,7 @@
         </li>
       </ul>
       {#if user}
-        <!-- <li class="user-name" on:click={showProfile}> -->
+        <li class="user-name" on:click={showProfile}>
         <li class="user-name">
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
@@ -283,7 +283,6 @@
   .profile-modal,
   .leftSide {
     position: relative;
-    /* flex: 30% 5%; */
     flex: 30%;
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -468,7 +467,7 @@
       display: none;
     }
     .leftSide {
-      -webkit-flex: 5%;
+      flex: 5%;
     }
     .header {
       display: flex;

@@ -367,9 +367,7 @@
   .loading,
   .rightSide {
     position: relative;
-    /* flex: 70% 95%; */
-    -webkit-flex: 70%;
-    /* width: 70%; */
+    flex: 70%;
     background: #e5ddd5;
   }
   .loading::before,
@@ -420,7 +418,6 @@
     cursor: pointer;
     color: #51585c;
     font-size: 1.5em;
-    /* border: 1px solid; */
   }
   li .icon-mic {
     margin-left: 10px;
@@ -431,6 +428,7 @@
     right: 15px;
     transform: translateY(-50%);
     font-size: 1.2rem;
+    color: #bbb;
   }
   @media (max-width: 400px) {
     .icon-send {

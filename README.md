@@ -72,4 +72,5 @@ Question:
   _*svelte project*_
   - This app does not required backend, therefore sveltekit is not the best option, shift to Svelte is the right choice
 
-
+- _*error message*_
+  - argument must be of type string or an instance of URL. Received undefined [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string or an instance of URL. Received undefined
