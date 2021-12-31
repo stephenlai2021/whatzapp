@@ -4,6 +4,9 @@
     doc,
     addDoc,
     setDoc,
+    query,
+    orderBy,
+    onSnapshot,
     Timestamp,
     updateDoc,
     collection,
@@ -12,8 +15,7 @@
   import { signOut } from "firebase/auth";
   import {
     selectedUser,
-    selectedUserMessages,
-    combinedID,
+    selectedUserMessages
   } from "$lib/functions/store";
   import { onMount } from "svelte";
   import { formatDistanceToNow } from "date-fns";
@@ -33,6 +35,7 @@
   let user_val = null;
   let isAudioOn = false;
   let micActive = false;
+  let messages = []
   let messages_val = null;
   let showEmojiMenu = false;
   let loggedInUser = auth.currentUser.uid;
@@ -179,40 +182,17 @@
       });
     }
   };
-
-  $: if (user_val) {
-    console.log("selected user: ", user_val);
-  }
-
-  $: if (messages_val) {
-    console.log("selected user messages: ", messages_val);
-  }
-
-  onMount(() => {
-    selectedUser.set(null);
-  });
 </script>
 
-{#if !user_val}
-  <div class="loading">
-    <img
-      src="whatsapp_web.jpg"
-      alt="logo pic"
-      style="height: calc(100%); width: 100%; object-fit: contain;"
-    />
-  </div>
-{:else}
   <div class="rightSide">
     <div class="header">
       <div style="display: flex; align-items: center;">
-        {#if user_val}
           <div class="imgText">
             <div class="userimg">
-              <img src={user_val.avatar} class="cover" alt="" />
+              <img src={$selectedUser.avatar} class="cover" alt="" />
             </div>
-            <h4>{user_val.name}</h4>
+            <h4>{$selectedUser.name}</h4>
           </div>
-        {/if}
       </div>
       <ul class="nav_icons">
         <li on:click={logout}>
@@ -227,8 +207,7 @@
       >
         <img src="whatsapp_web.jpg" alt="logo pic" />
       </div>
-      {#if messages_val.length}
-        {#each messages_val as item (item.createdAt)}
+        {#each $selectedUserMessages as item (item.createdAt)}
           {#if item.from === auth.currentUser.uid}
             <div class="message my_message">
               <p
@@ -248,11 +227,12 @@
                   </audio>
                 {/if}
                 {item.message}
-                <span>{formatDistanceToNow(item.createdAt.toDate())}</span>
+                <!-- <span>{formatDistanceToNow(item.createdAt.toDate())}</span> -->
+                <span>{item.createdAt}</span>
               </p>
             </div>
           {/if}
-          {#if item.from === user_val.uid}
+          {#if item.from === $selectedUser.uid}
             <div class="message friend_message">
               <p style="display: flex; flex-direction: column;">
                 {#if item.image}
@@ -269,12 +249,13 @@
                   </audio>
                 {/if}
                 {item.message}
-                <span>{formatDistanceToNow(item.createdAt.toDate())}</span>
+                <!-- <span>{formatDistanceToNow(item.createdAt.toDate())}</span> -->
+                <span>{item.createdAt}</span>
               </p>
             </div>
           {/if}
         {/each}
-      {/if}
+      <!-- {/if} -->
     </div>
     <div class="chatbox_input" style="position: relative;">
       {#if file}
@@ -330,7 +311,7 @@
     on:add-emoji={addEmoji}
     on:close-menu={() => (showEmojiMenu = false)}
   />
-{/if}
+<!-- {/if} -->
 
 <style>
   audio {
@@ -367,7 +348,7 @@
   .loading,
   .rightSide {
     position: relative;
-    flex: 70%;
+    flex: 90%;
     background: #e5ddd5;
   }
   .loading::before,

@@ -12,10 +12,10 @@
   import useStorage from "$lib/functions/useStorage";
   import {
     selectedUserMessages,
-    combinedID,
-    selectedUser,
+    selectedUser
   } from "$lib/functions/store";
   import { formatDistanceToNow } from "date-fns";
+  import { goto } from '$app/navigation'
 
   let id = null;
   let file = null;
@@ -23,7 +23,6 @@
   let users = null;
   let messages = [];
   let lastMsg = null;
-  let ids_val = null;
   let leftSide = null;
   let fileError = null;
   let hasAvatar = false;
@@ -37,8 +36,6 @@
 
   // allowed file types
   const types = ["image/png", "image/jpeg", "image/jpg"];
-
-  combinedID.subscribe((val) => (ids_val = val));
 
   const handleChange = (e) => {
     let selected = e.target.files[0];
@@ -82,6 +79,7 @@
     });
 
     selectedUser.set(user);
+    goto(`/chat/${user.name}`)
   };
 
   // get current user
@@ -96,16 +94,16 @@
   });
 
   // get last message
-  $: if (!ids_val) {
-    console.log("can't find id!");
-  } else {
-    const unsub = onSnapshot(doc(db, "whatzapp_lastMsg", ids_val), (doc) => {
-      console.log("last message: ", doc.data());
-      lastMsg = doc.data();
+  // $: if (!ids_val) {
+  //   console.log("can't find id!");
+  // } else {
+  //   const unsub = onSnapshot(doc(db, "whatzapp_lastMsg", ids_val), (doc) => {
+  //     console.log("last message: ", doc.data());
+  //     lastMsg = doc.data();
 
-      return () => unsub();
-    });
-  }
+  //     return () => unsub();
+  //   });
+  // }
 
   // get all users
   const unsubUsers = onSnapshot(q, (querySnapshot) => {
@@ -119,7 +117,7 @@
   });
 </script>
 
-{#if !showProfileModal}
+<!-- {#if !showProfileModal} -->
   <div class="leftSide" bind:this={leftSide}>
     <div class="header">
       <div class="userimg" style="cursor: pointer;">
@@ -199,7 +197,7 @@
       </div>
     {/if}
   </div>
-{:else}
+<!-- {:else}
   <div class="profile-modal" in:fade={{ x: -30 }}>
     <div class="close-icon" style="text-align: right; padding: 5px;">
       <ion-icon
@@ -208,7 +206,7 @@
         style="font-size: 1.5rem;"
       />
     </div>
-    <!-- {#if hasAvatar} -->
+    {#if hasAvatar}
     <div class="avatar-container">
       <div class="avatar-box">
         <img src={user.avatar} alt="user avatar" />
@@ -218,10 +216,10 @@
         </label>
       </div>
     </div>
-    <!-- {/if} -->
+    {/if}
     <p class="center">{user.name}</p>
   </div>
-{/if}
+{/if} -->
 
 <style>
   .center {

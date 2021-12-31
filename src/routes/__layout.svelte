@@ -1,10 +1,13 @@
 <!-- <script context="module">
+
   import { onAuthStateChanged } from "@firebase/auth";
   import { auth } from "$lib/functions/firebase";
   import { goto } from "$app/navigation";
   import { browser } from "$app/env";
 
-  browser &&
+  export const prerender = true
+
+  if (browser) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         goto("/chat");
@@ -12,10 +15,23 @@
         goto("/");
       }
     });
+  }
 </script> -->
 
 <script>
   import "../global.css";
+  // import { onAuthStateChanged } from 'firebase/auth'
+  // import { auth } from '$lib/functions/firebase'
+  // import { onMount } from 'svelte'
+  // import { goto } from '$app/navigation'
+
+  // onMount(() => {
+  //   onAuthStateChanged(auth, async user => {
+  //     if (!user) await goto('/')
+  //     if (user) await goto('/chat')
+  //   })
+  // })
+
 </script>
 
 <svelte:head>
@@ -29,6 +45,4 @@
     src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </svelte:head>
 
-<main>
-  <slot />
-</main>
+<slot />

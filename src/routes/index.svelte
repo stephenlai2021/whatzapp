@@ -13,7 +13,6 @@
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         goto("/chat");
-        // goto("/test");
       } else {
         showPage = true;
       }
