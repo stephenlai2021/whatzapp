@@ -144,7 +144,7 @@
       </ul>
       {#if user}
         <li class="user-name" on:click={showProfile}>
-        <li class="user-name">
+        <li class="user-name" style="border: 1px solid;">
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
       {/if}
