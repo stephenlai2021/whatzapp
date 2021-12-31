@@ -456,8 +456,10 @@
   }
   @media (max-width: 575px) {
     .user-name {
-      display: grid;
-      place-content: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
     }
     .userimg,
     .search_chat,
