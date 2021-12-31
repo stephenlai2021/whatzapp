@@ -143,7 +143,6 @@
         </li>
       </ul>
       {#if user}
-        <!-- <li class="user-name" on:click={showProfile}> -->
         <li class="user-name" style="border: 1px solid;" on:click={showProfile}>
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
@@ -456,12 +455,7 @@
   }
   @media (max-width: 575px) {
     .user-name {
-      /* display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center; */
       display: block;
-      /* width: 100%; */
       white-space: nowrap
     }
     .userimg,
