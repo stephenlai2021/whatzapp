@@ -144,7 +144,7 @@
       </ul>
       {#if user}
         <li class="user-name" on:click={showProfile}>
-        <li class="user-name" style="display: grid; place-content: center;">
+        <li class="user-name">
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
       {/if}
@@ -456,7 +456,8 @@
   }
   @media (max-width: 575px) {
     .user-name {
-      display: block;
+      display: grid;
+      place-content: center;
     }
     .userimg,
     .search_chat,
