@@ -143,7 +143,7 @@
         </li>
       </ul>
       {#if user}
-        <li class="user-name" on:click={showProfile}>
+        <!-- <li class="user-name" on:click={showProfile}> -->
         <li class="user-name" style="border: 1px solid;">
           {user.name.match(/(?:\s|^)(\S)/g).join("")}
         </li>
@@ -461,8 +461,8 @@
       justify-content: center;
       align-items: center; */
       display: block;
-      width: 100%;
-      /* white-space: nowrap */
+      /* width: 100%; */
+      white-space: nowrap
     }
     .userimg,
     .search_chat,
